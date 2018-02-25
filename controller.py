@@ -1,9 +1,11 @@
 import web
 
+
 urls = (
     '/', 'home'
 )
 
+render = web.template.render("Views/Templates", base="MainLayout")
 app = web.application(urls, globals())
 
 
@@ -13,7 +15,7 @@ app = web.application(urls, globals())
 
 class home:
     def GET(self):
-        return "home"
+        return render.home()
 
 if __name__ == "__main__":
     app.run()
