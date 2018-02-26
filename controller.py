@@ -6,7 +6,7 @@ urls = (
     '/register', 'register'
 )
 
-render = web.template.render("Views/Templates", base="MainLayout")
+render = web.template.render("views/templates", base="mainLayout")
 app = web.application(urls, globals())
 
 
@@ -17,9 +17,10 @@ app = web.application(urls, globals())
 class home:
     def GET(self):
         return render.home()
+
 class register:
     def GET(self):
-        return render.Register()
+        return render.register()
 
 if __name__ == "__main__":
     app.run()

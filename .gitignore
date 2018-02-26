@@ -13,5 +13,7 @@ test/
 setup.py
 .travis.yml
 .idea/
+webpy-master/
+static/js/
 
 
