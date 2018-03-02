@@ -4,6 +4,7 @@ from Models import RegisterModel
 urls = (
     '/', 'Home',
     '/register', 'Register',
+    '/login', 'Login',
     '/postregistration', 'PostRegistration'
 
 )
@@ -20,9 +21,15 @@ class Home:
     def GET(self):
         return render.Home()
 
+
 class Register:
     def GET(self):
         return render.Register()
+
+class Login:
+    def GET(self):
+        return render.Login()
+
 
 class PostRegistration:
     def POST(self):
