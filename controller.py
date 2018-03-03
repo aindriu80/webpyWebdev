@@ -56,6 +56,7 @@ class Checklogin:
         isCorrect = login.check_user(data)
 
         if isCorrect:
+            session_data["user"] = isCorrect
             return isCorrect
 
         return "error"
