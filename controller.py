@@ -64,6 +64,9 @@ class Checklogin:
 
 class Logout:
     def GET(self):
+        session['user'] = None
+        session_data['user'] = None
+
         session.kill()
         return "success"
 
