@@ -12,3 +12,12 @@ class Posts:
         inserted = self.Posts.insert({"username": data.username, "content": data.content})
         return True
 
+    def get_all_posts(self):
+        all_posts = self.Posts.find()
+        new_posts = []
+
+        for post in all_posts:
+            post["user"] = self.Users.find_one({"username": post["username"]})
+            new_posts.append(post)
+
+        return all_posts
