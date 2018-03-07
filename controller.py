@@ -10,8 +10,11 @@ urls = (
     '/logout', "Logout",
     '/postregistration', 'PostRegistration',
     '/check-login', 'Checklogin'
-    '/post-activity', 'PostActivity'
-
+    '/post-activity', 'PostActivity',
+    '/profile/{.*}/info', "UserInfo",
+    '/settings', "UserSettings",
+    '/update-settings', "UpdateSettings",
+    '/profile/{.*}', "UserProfile"
 )
 
 
@@ -81,6 +84,32 @@ class PostActivity:
         post_model = Posts.Posts()
         post_model.insert_post(data)
         return "success"
+
+class UserProfile:
+    def GET(self,user):
+        data = type('obj', (object,), {"username": "nick1", "password": "password"})
+
+        login = LoginModel.loginModel()
+        isCorrect = login.check_user(data)
+
+        if isCorrect:
+            session_data["user"] = isCorrect
+
+        post_model = Posts.Posts()
+        posts = post_model.get_user_posts(user)
+        return render.Profile(posts)
+
+class UserInfo:
+    def GET(self, user):
+        data = type('obj', (object,), {"username": "nick1", "password": "password"})
+
+        login = LoginModel.loginModel()
+        isCorrect = login.check_user(data)
+
+        if isCorrect:
+            session_data["user"] = isCorrect
+
+        return render.Info()
 
 
 
