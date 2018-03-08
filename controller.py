@@ -111,6 +111,30 @@ class UserInfo:
 
         return render.Info()
 
+class UserSettings:
+    def GET(self):
+        data = type('obj', (object,), {"username": "nick1", "password": "password"})
+
+        login = LoginModel.loginModel()
+        isCorrect = login.check_user(data)
+
+        if isCorrect:
+            session_data["user"] = isCorrect
+
+        return render.Info()
+
+class UpdateSettings:
+    def Post(self):
+        data = web.input()
+        data.username = session_data["user"]["username"]
+
+        settings_model = LoginModel.loginModel()
+        if settings_model.update(data):
+            return "success"
+        else:
+            return "A fatal error has occured."
+
+
 
 
 class Logout:
