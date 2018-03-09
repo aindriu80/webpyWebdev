@@ -90,6 +90,7 @@ class UserProfile:
         data = type('obj', (object,), {"username": "nick1", "password": "password"})
 
         login = LoginModel.loginModel()
+        user_info = login.get_profile(user)
         isCorrect = login.check_user(data)
 
         if isCorrect:
@@ -97,7 +98,7 @@ class UserProfile:
 
         post_model = Posts.Posts()
         posts = post_model.get_user_posts(user)
-        return render.Profile(posts)
+        return render.Profile(posts, user_info)
 
 class UserInfo:
     def GET(self, user):
@@ -109,7 +110,9 @@ class UserInfo:
         if isCorrect:
             session_data["user"] = isCorrect
 
-        return render.Info()
+        user_info = login.get_profile(user)
+
+        return render.Info(user_info)
 
 class UserSettings:
     def GET(self):
