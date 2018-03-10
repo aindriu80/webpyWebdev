@@ -1,5 +1,8 @@
 import pymongo, bcrypt
 from pymongo import MongoClient
+import datetime
+import humanize
+
 
 class Posts:
     def __init__(self):
@@ -10,7 +13,11 @@ class Posts:
 
     def insert_post(self, data):
         inserted = self.Posts.insert({"username": data.username, "content": data.content})
-        return True
+        post = self.Posts.find.one({"_id": inserted})
+        new_post = {}
+        new_post["name"]  = self.Users.find_one({"username": post["username"]})["name"]
+        new_post["content"] = post["content"]
+        return post
 
     def get_all_posts(self):
         all_posts = self.Posts.find()
@@ -18,6 +25,7 @@ class Posts:
 
         for post in all_posts:
             post["user"] = self.Users.find_one({"username": post["username"]})
+            post["timestamp"] = humanize.naturaltime(datetime.datetime.now() -post["date_added"])
             new_posts.append(post)
 
         return all_posts

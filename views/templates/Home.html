@@ -8,3 +8,10 @@ $for post in posts:
 $post['user']['name']
 
 $post['content']
+
+<h3>posts</h3>
+$for post in posts:
+<div class="post-card">
+    <a href="/profile/$post['username']">$post['user']['name']</a>
+    <span class="timestamp">$post['timestamp']</span>
+</div>
