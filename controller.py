@@ -14,7 +14,8 @@ urls = (
     '/profile/{.*}/info', "UserInfo",
     '/settings', "UserSettings",
     '/update-settings', "UpdateSettings",
-    '/profile/{.*}', "UserProfile"
+    '/profile/{.*}', "UserProfile",
+    '/submit-comment', "SubmitComment"
 )
 
 
@@ -32,13 +33,13 @@ render = web.template.render("views/Templates", base="MainLayout", globals={'ses
 
 class Home:
     def GET(self):
-        data = type('obj', (object,), {"username": "nick1", "password": "password"})
-
-        login = LoginModel.loginModel()
-        isCorrect = login.check_user(data)
-
-        if isCorrect:
-            session_data["user"] = isCorrect
+        # data = type('obj', (object,), {"username": "nick1", "password": "password"})
+        #
+        # login = LoginModel.loginModel()
+        # isCorrect = login.check_user(data)
+        #
+        # if isCorrect:
+        #     session_data["user"] = isCorrect
 
         post_model = Posts.Posts()
         posts = post_model.get_all_posts()
@@ -125,6 +126,19 @@ class UserSettings:
             session_data["user"] = isCorrect
 
         return render.Info()
+
+class SubmitComment:
+    def POST(self):
+        data = web.input()
+        data.username = session_data["user"]["username"]
+
+        post_model = Posts.Posts()
+        added_comment = post_model.add_comment(data)
+
+        if added_comment:
+            return added_comment
+        else:
+            return "fatal error"
 
 class UpdateSettings:
     def Post(self):
