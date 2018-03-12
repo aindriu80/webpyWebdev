@@ -1,5 +1,6 @@
 import web
 from Models import RegisterModel, LoginModel, Posts
+import os
 
 web.config.debug = False
 
