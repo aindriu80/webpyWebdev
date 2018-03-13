@@ -16,7 +16,8 @@ urls = (
     '/settings', "UserSettings",
     '/update-settings', "UpdateSettings",
     '/profile/{.*}', "UserProfile",
-    '/submit-comment', "SubmitComment"
+    '/submit-comment', "SubmitComment",
+    '/upload-image</.*)', 'UploadImage'
 )
 
 
@@ -162,6 +163,34 @@ class Logout:
 
         session.kill()
         return "success"
+
+
+class UploadImage:
+    def POST(self, type):
+        file = web.input(avatar={}, background={})
+        file_dir = os.getcwd() + "/static/uploads/" + session_data["user"]["username"]
+
+        if not os.path.exists(file_dir):
+            os.mkdir(file_dir)
+
+        if "avatar" or "background" in file:
+            filepath = file[type].filename.replace('\\', '/')
+            filename = filepath.split("/")[-1]
+            f = open(file_dir + "/" + filename, 'wb')
+            f.write(file[type].file.read())
+            f.close()
+
+            update = {}
+            update["type"] = type
+            update[type] = '/static/uploads/' + session_data["user"]["username"] + "/" + filename
+            update["username"] = session_data["user"]["username"]
+
+            account_model = LoginModel.loginModel()
+            update_avatar =account_model.update_image(update)
+
+        raise web.seeother("/settings")
+
+
 
 if __name__ == "__main__":
     app.run()
