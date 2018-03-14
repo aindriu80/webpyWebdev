@@ -9,6 +9,12 @@
 <p><input name="name" class="form-control no-border" value="$session['user']['name']"/></p>
 <span class="post-subtitle">About</span>
 
+<h3>Avatar</h3>
+<div class="avatar">
+<img src="$session['user']['avatar']" class="profile-avatar"/>
+    <h4 class="profile-name">$session['user']['name']</h4>
+</div>
+
 <div class="post-card extra-padding">
     <h2>Images</h2>
     <form id="avatar-upload" method="Post" enctype="multipart/form-data" action="/upload-image/avatar">

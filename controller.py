@@ -182,7 +182,7 @@ class UploadImage:
 
             update = {}
             update["type"] = type
-            update[type] = '/static/uploads/' + session_data["user"]["username"] + "/" + filename
+            update["img"] = '/static/uploads/' + session_data["user"]["username"] + "/" + filename
             update["username"] = session_data["user"]["username"]
 
             account_model = LoginModel.loginModel()
